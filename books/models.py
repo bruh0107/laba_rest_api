@@ -35,7 +35,7 @@ class Book(models.Model):
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     publisher = models.CharField(max_length=100)
     cover_image = models.ImageField(upload_to='covers/', null=True, blank=True)
-    book_file = models.FileField(upload_to='books/')
+    book_file = models.FileField(upload_to='books_file/')
 
     class Meta:
         unique_together = ('title', 'author', 'year', 'publisher')

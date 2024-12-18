@@ -1,15 +1,10 @@
 from rest_framework import serializers
 from .models import Book, Author
 
-class AuthorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Author
-        fields = '__all__'
-
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ['id', 'title', 'year', 'genre', 'category', 'publisher']
 
     def validate(self, data):
         if data['category'] == 'T':
@@ -30,3 +25,9 @@ class BookSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Эта художественная книга уже добавлена.")
 
         return data
+
+class AuthorSerializer(serializers.ModelSerializer):
+    books = BookSerializer(source='book_set', many=True, read_only=True)
+    class Meta:
+        model = Author
+        fields = ['id', 'first_name', 'last_name', 'biography', 'birth_date', 'books']
