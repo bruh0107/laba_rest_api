@@ -38,7 +38,7 @@ class Book(models.Model):
     book_file = models.FileField(upload_to='books_file/')
 
     class Meta:
-        unique_together = ('title', 'author', 'year', 'publisher')
+        pass
 
     def clean(self):
         if self.category == 'T':
